@@ -227,11 +227,17 @@ peek() {
 
 stripl() {
   local arg=$1
+  if [[ $arg == *'['*']'* ]]; then
+    arg=$(echo $arg | sed -E 's/\]/\\]/g')
+  fi
   cat - | map lambda l . 'ret ${l##'$arg'}'
 }
 
 stripr() {
   local arg=$1
+  if [[ $arg == *'['*']'* ]]; then
+    arg=$(echo $arg | sed -E 's/\]/\\]/g')
+  fi
   cat - | map lambda l . 'ret ${l%%'$arg'}'
 }
 
